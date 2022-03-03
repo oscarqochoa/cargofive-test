@@ -114,6 +114,7 @@ export default {
     };
   },
   computed: {
+    // Get the data according to the selected filters
     filteredPorts() {
       return this.filters.general != "" ||
         this.filters.country != "" ||
@@ -142,6 +143,8 @@ export default {
   methods: {
     async search() {
       this.table.isBusy = true;
+
+      // Get data from API
       const response = await PortsService.getPorts({
         page: this.params.page,
       });
@@ -158,6 +161,7 @@ export default {
         this.data.links = response.data.links;
         this.data.meta = response.data.meta;
 
+        // Obtain the countries and continents by unifying them
         let arrCountries = new Set();
         let arrContinents = new Set();
 
@@ -186,6 +190,7 @@ export default {
   justify-content: end;
 }
 
+/* Filtes */
 .select-country-group,
 .select-continent-group {
   width: 100% !important;
@@ -203,13 +208,10 @@ export default {
       color: grey;
     }
 
-    option:hover {
-      background: orange !important;
-      color: red;
-    }
   }
 }
 
+/* Pagination */
 .pagination {
   li {
     button {
@@ -229,6 +231,7 @@ export default {
     border-color: white !important;
   }
 
+  /* Customize active item */
   .page-item.active {
     button {
       background: #243664 !important;
@@ -236,6 +239,7 @@ export default {
   }
 }
 
+/* Table */
 #ports-table {
   thead {
     tr {
@@ -253,6 +257,7 @@ export default {
         background-color: rgba(184, 204, 255, 0.2) !important;
       }
 
+      /* Customize striped style */
       &:nth-of-type(odd) > * {
         color: black;
         background-color: rgba(184, 204, 255, 0.2) !important;
